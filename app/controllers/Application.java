@@ -16,9 +16,13 @@ import play.libs.Json;
 
 public class Application extends Controller {
 
-    final static String endpoint_login = "http://opsview-arg.localdomain/rest/login";
+
     final static String hostname = "arg-prod-app01";
-    //final static String endpoint_cpuIdle = "http://opsview-arg.localdomain/rest/status/performancemetric/?order=hostname&order=metricname&metricname=cpu_idle&hostname=arg-prod-app01";
+
+    //http://opsview-arg.localdomain/rest/login
+    final static String endpoint_login = "http://opsview-arg.localdomain/rest/login";
+
+    //http://opsview-arg.localdomain/rest/status/performancemetric/?order=hostname&order=metricname&metricname=cpu_idle&hostname=arg-prod-app01
     final static String endpoint_cpuIdle = "http://opsview-arg.localdomain/rest/status/performancemetric";
 
     static String token = "";
