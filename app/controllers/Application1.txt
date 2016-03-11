@@ -1,0 +1,38 @@
+package controllers;
+
+import play.*;
+import play.mvc.*;
+
+import views.html.*;
+
+
+// WS specific imports
+import play.libs.WS;
+import play.mvc.Result;
+import static play.libs.F.Function;
+import static play.libs.F.Promise;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import play.libs.Json;
+
+public class Application extends Controller {
+
+    final static String feedUrl = "http://www.google.co.uk";
+
+    public static Promise<Result> index(){
+       return getHtmlResponse();
+    }
+
+    public static Promise<Result> getHtmlResponse() {
+        final Promise<Result> resultPromise = WS.url(feedUrl)
+	    .get()
+	    .map(
+               new Function<WS.Response, Result>() {
+                  public Result apply(WS.Response response) {
+                     return ok(response.getBody());
+                  }
+               }
+            );
+        return resultPromise;
+    }
+}

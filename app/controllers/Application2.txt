@@ -1,0 +1,43 @@
+package controllers;
+
+import play.*;
+import play.mvc.*;
+
+import views.html.*;
+
+
+// WS specific imports
+import play.libs.WS;
+import play.mvc.Result;
+import static play.libs.F.Function;
+import static play.libs.F.Promise;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import play.libs.Json;
+
+public class Application extends Controller {
+
+    final static String feedUrl = "http://opsview-arg.localdomain/rest/login";
+    final static JsonNode authJSON = Json.newObject()
+            .put("username", "support")
+            .put("password", "FreeB1rd");
+
+    /*public static Result index() {
+        return ok(index.render("Your new application is ready."));
+    }*/
+
+    public static Promise<Result> index() {
+        final Promise<Result> resultPromise = WS.url(feedUrl)
+	    .setContentType("application/json")
+	    .post(authJSON)
+	    .map(
+               new Function<WS.Response, Result>() {
+                  public Result apply(WS.Response response) {
+                    //return ok("response: " + response.asJson().findPath("token"));
+                    return ok("response: " + response.asJson());
+                  }
+               }
+            );
+        return resultPromise;
+    }
+}
